@@ -24,4 +24,10 @@ NIO stands for non-blocking IO, which means when process requires IO, it won't b
   
 #### File NIO Copy :link:[link](src/nio/channel_demo/FileNIOCopy.java)
 
-Use channel to copy a file.
+Use input channel and output channel to copy a file, with a byte buffer in between.
+
+Cons: the process is not efficient since the buffer needs to switch between read mode an write mode back and forth on every line-copying.
+
+#### File NIO Copy :link:[link](src/nio/channel_demo/FileNIOChannelTransferCopy.java)
+
+Use <i>transferTo()</i> and <i>transferFrom()</i> to communicate between input channel and output channel without using a buffer. 

@@ -1,5 +1,13 @@
+****************************************************
 nio data copy demo line 1
+A channel for reading, writing, mapping, and manipulating a file.
+A file channel has a current position within its file which can be both queried and modified. The file itself contains a variable-length sequence of bytes that can be read and written and whose current size can be queried. The size of the file increases when bytes are written beyond its current size; the size of the file decreases when it is truncated. The file may also have some associated metadata such as access permissions, content type, and last-modification time; this class does not define methods for metadata access.
+In addition to the familiar read, write, and close operations of byte channels, this class defines the following file-specific operations:
+Bytes may be read or written at an absolute position in a file in a way that does not affect the channel's current position.
+A region of a file may be mapped directly into memory; for large files this is often much more efficient than invoking the usual read or write methods.
+Updates made to a file may be forced out to the underlying storage device, ensuring that data are not lost in the event of a system crash.
+Bytes can be transferred from a file to some other channel, and vice versa, in a way that can be optimized by many operating systems into a very fast transfer directly to or from the filesystem cache.
+A region of a file may be locked against access by other programs.
+File channels are safe for use by multiple concurrent threads. The close method may be invoked at any time, as specified by the Channel interface. Only one operation that involves the channel's position or can change its file's size may be in progress at any given time; attempts to initiate a second such operation while the first is still in progress will block until the first operation completes. Other operations, in particular those that take an explicit position, may proceed concurrently; whether they in fact do so is dependent upon the underlying implementation and is therefore unspecified.
 nio data copy demo line 2
-nio data copy demo line 3
-nio data copy demo line 4
-nio data copy demo line 5
+****************************************************
