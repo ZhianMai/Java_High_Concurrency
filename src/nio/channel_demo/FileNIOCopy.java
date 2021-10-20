@@ -15,8 +15,7 @@ public class FileNIOCopy {
   public void nioCopySourceFile(String inputFilePath, String outputFilePath) throws IOException {
     File srcFile = new File(inputFilePath);
     if (!srcFile.exists()) {
-      System.out.println("Source file not exist.");
-      return;
+      throw new IOException("Source file not exist.");
     }
 
     File destFile = new File(outputFilePath);
