@@ -5,7 +5,7 @@ import java.nio.IntBuffer;
 /**
  * Demo of Buffer creation, input data, read data, and read-write mode switch.
  **/
-public class UseBufferDemo {
+public class BufferDemo {
   private IntBuffer intBuffer = null;
   private static final int DEFAULT_CAPACITY = 100;
 
@@ -130,7 +130,7 @@ public class UseBufferDemo {
   }
 
   public static void main(String[] args) {
-    UseBufferDemo demo = new UseBufferDemo();
+    BufferDemo demo = new BufferDemo();
 
     demo.allocateBufferTest(DEFAULT_CAPACITY);
 
