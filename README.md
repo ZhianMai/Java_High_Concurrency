@@ -28,6 +28,6 @@ Use input channel and output channel to copy a file, with a byte buffer in betwe
 
 Cons: the process is not efficient since the buffer needs to switch between read mode an write mode back and forth on every line-copying.
 
-#### File NIO Copy :link:[link](src/nio/channel_demo/FileNIOChannelTransferCopy.java)
+#### File NIO Channel Transfer Copy :link:[link](src/nio/channel_demo/FileNIOChannelTransferCopy.java)
 
 Use <i>transferTo()</i> and <i>transferFrom()</i> to communicate between input channel and output channel without using a buffer. 
