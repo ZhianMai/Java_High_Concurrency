@@ -53,7 +53,7 @@ public class FileNIOCopy {
 
       outChannel.force(true); // Force to write to disk
     } catch (Exception e ) {
-
+      throw new IOException(e.getMessage());
     } finally {
       inStream.close();
       outStream.close();
