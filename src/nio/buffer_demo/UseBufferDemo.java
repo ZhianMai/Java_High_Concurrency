@@ -5,14 +5,14 @@ import java.nio.IntBuffer;
 /**
  * Demo of Buffer creation, input data, read data, and read-write mode switch.
  **/
-public class UseBuffer {
-  static IntBuffer intBuffer = null;
+public class UseBufferDemo {
+  private IntBuffer intBuffer = null;
   private static final int DEFAULT_CAPACITY = 100;
 
   /**
    * Buffer cannot be created by ctor. It should be created by calling Subclass.allocate().
    **/
-  static void allocateBufferTest(int capacity) {
+  private void allocateBufferTest(int capacity) {
     intBuffer = IntBuffer.allocate(DEFAULT_CAPACITY);
 
     print("-----> Allocation Finished <-----");
@@ -24,7 +24,7 @@ public class UseBuffer {
    * Write data starting at position pointer. If the position pointer reaches the capacity,
    * then java.nio.BufferOverflowException is thrown.
    * */
-  static void bufferPutTest(int times) {
+  private void bufferPutTest(int times) {
     checkBufferNull();
 
     for (int i = 0; i < times; i++) {
@@ -39,7 +39,7 @@ public class UseBuffer {
   /**
    * Write mode switches to read mode.
    */
-  static void bufferFlipTest() {
+  private void bufferFlipTest() {
     checkBufferNull();
 
     intBuffer.flip();
@@ -57,7 +57,7 @@ public class UseBuffer {
    *
    * If the read data exceeds limit, then BufferUnderflowException is thrown.
    */
-  static void bufferGetTest(int count) {
+  private void bufferGetTest(int count) {
     checkBufferNull();
 
     for (int i = 1; i <= count; i++) {
@@ -74,9 +74,13 @@ public class UseBuffer {
   }
 
   /**
-   * Move all elements starting at index position to index 0, say
+   * Move all elements starting at index position to index 0. Say the write limit is index 99, and
+   * the current position is 15. The it will move all data from index 15 - 99 to index 0 - 84, then
+   * reset position to 85.
+   *
+   * Compact() does not check buffer element is null or not.
    */
-  static void bufferCompactTest() {
+  private void bufferCompactTest() {
     checkBufferNull();
     intBuffer.compact();
 
@@ -88,7 +92,7 @@ public class UseBuffer {
   /**
    * Reset position to 0. Now the buffer can write data from scratch or read from the beginning.
    */
-  static void bufferClearTest() {
+  private void bufferClearTest() {
     checkBufferNull();
     intBuffer.clear();
 
@@ -100,7 +104,7 @@ public class UseBuffer {
   /**
    * Reset position to 0 and switch to read mode, so all data can be read again.
    */
-  static void bufferRewindTest() {
+  private void bufferRewindTest() {
     checkBufferNull();
     intBuffer.rewind();
 
@@ -109,29 +113,47 @@ public class UseBuffer {
     print("");
   }
 
+  /**
+   * mark(): store the current position value to variable mark;
+   * reset(): assign mark value to position.
+   */
+  private void bufferMarkResetTest(int count) {
+    checkBufferNull();
+
+    print("Begin mark-reset test\nMark position\n");
+    intBuffer.mark();
+    bufferGetTest(count);
+    print("Reset position and read again\n");
+    intBuffer.reset();
+    bufferGetTest(count);
+    print("End mark-reset test");
+  }
+
   public static void main(String[] args) {
-    allocateBufferTest(DEFAULT_CAPACITY);
+    UseBufferDemo demo = new UseBufferDemo();
 
-    bufferPutTest(30);
+    demo.allocateBufferTest(DEFAULT_CAPACITY);
+
+    demo.bufferPutTest(30);
     // java.nio.BufferOverflowException
-    // bufferPutTest(intBuffer.capacity() + 1);
+    // demo.bufferPutTest(intBuffer.capacity() + 1);
 
-    bufferFlipTest();
-    bufferGetTest(15);
+    demo.bufferFlipTest();
+    demo.bufferGetTest(15);
 
-    bufferClearTest();
-    bufferGetTest(15);
+    demo.bufferClearTest();
+    demo.bufferGetTest(15);
 
-    bufferRewindTest();
-    bufferGetTest(15);
+    demo.bufferRewindTest();
+    demo.bufferGetTest(15);
 
-    bufferCompactTest();
-    bufferRewindTest();
-    bufferGetTest(15);
+    demo.bufferRewindTest();
+    demo.bufferMarkResetTest(15);
+    demo.bufferCompactTest();
     //bufferClearTest();
   }
 
-  private static void checkBufferNull() {
+  private void checkBufferNull() {
     if (intBuffer == null) {
       allocateBufferTest(DEFAULT_CAPACITY);
     }
